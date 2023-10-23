@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link  rel="stylesheet", type='text/css' href="{% static 'appWeb/css/stylesddr.css' %}" >
+
+    <!-- fontawesome.cdn for ICONS-->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!--animatecss.cdn for ANIMATION-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+    <title>Ingresar Datos</title>
+</head>
+<body>
+    <div class='container'>
+        <div class='wrapper animated bounceInLeft'></div>
+        <div class='company-info'>
+            
+            <h1 class='brand'><span>Registro Demanda Diaria</span></h1>
+                <form>
+                
+                </form>
+        </div>    
+        <div class='contact'>
+            <h1>Ingresar Datos para {{ medicamento.codigo }} -  {{ medicamento.nombre }} -  {{ medicamento.concentracion }} - {{ medicamento.presentacion }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ demanda_form.as_p }}           
+             <button type="submit" value="Guardar" id="btnGuardar" class="btn btn-primary">Registrar</button>
+                           
+            </form>
+         </div>
+
+        <!--<input type="submit" value="Guardar">-->
+    </form>
+    </div>
+</body>
+</html>
+
+

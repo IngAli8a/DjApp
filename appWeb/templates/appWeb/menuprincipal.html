@@ -1,0 +1,77 @@
+
+{% load static %}
+
+ <!DOCTYPE html>
+
+  <html lang="en" class="no-js">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+      <title>Gestión de Medicamentos</title>
+      <link  rel="stylesheet", type='text/css' href="{% static 'appWeb/css/stylesprin.css' %}"/ >
+    </head>
+    
+        
+    <body>
+     
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+    
+    
+      <div class="login-box">
+        <h1>MENU PRINCIPAL</h1>
+        <form>
+          <a href="buscar_medicamento/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Demanda Diaria Real
+          </a>
+          <a href="menurepo/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+                Area de Reportería
+          </a>
+         
+          <a href="InfoMed/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Admin.    Medicamentos
+          </a>
+          <a href="admin_indi/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Admin. Indicadores
+          </a>
+          <a href="guardar_indicadores/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Indicadores Mensuales
+          </a>
+          <a href="crear_user/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Configuraciones
+          </a>
+        </form>
+      </div>
+     
+          <!---<script src="{% static 'appWeb/js/menu.js' %}"></script>-->
+    </body>
+  </html>
+
+        

@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Indicadores</title>
+       
+        <link  rel="stylesheet", type='text/css' href="{% static 'appWeb/css/stylesAdmin.css' %}" >
+    
+        <!-- fontawesome.cdn for ICONS-->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+        <!--animatecss.cdn for ANIMATION-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css" />
+ </head>
+
+ <body>
+    <div class='container'>
+        <h1 class='brand'><span>Registro Información de Indicadores</span></h1>
+    
+        <!--animated bounceInLeft class for selection what will be animated-->
+        <div class='wrapper animated bounceInLeft'>
+            <div class='company-info'>
+                <h3><span>Centro Comunitario</span></Centro></h3>
+                    <form>
+            
+                    </form>
+             </div>
+         <div class='contact'>
+             <h3>Registro de Informacion de Indicadores</h3>
+                    <form action"" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}    
+                        <button type="submit" id="btnGuardar" class="btn btn-primary">Registrar</button>
+                    </form>
+          </div>
+     </div>    
+</body>
+</html>

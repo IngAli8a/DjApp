@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demanda Diaria Real</title>
+    <link  rel="stylesheet", type='text/css' href="{% static 'appWeb/css/stylesddr.css' %}" >
+
+    <!-- fontawesome.cdn for ICONS-->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   <link href="https://kinsta.com/es/blog/fuentes-seguras-para-la-web/#5-calisto-mt" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!--animatecss.cdn for ANIMATION-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css" />
+
+</head>
+<body>
+    <div class='container'>
+        
+        <div class='wrapper animated bounceInLeft'></div>
+            <div class='company-info'>
+                
+                <h1 class='brand'><span>Registro Demanda Diaria</span></h1>
+                <div class="login-box">
+                    <form>
+                        <a href="{% url 'menuprincipal' %}" class="boton-regresar">Regresar al Menú Principal</a>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </a>
+                    </form>
+               
+                </div>
+            </div>
+
+            <div class='contact'>
+                        <h1>Buscar Medicamento</h1>
+                        <form action"" method="post">
+                            {% csrf_token %}
+                            {{ medicamento_form.as_p }}
+                            <input type="submit" value="Buscar">
+                        </form>
+
+                        {% if medicamentos %}
+                            <h2>Resultados de la búsqueda:</h2>
+                            <ul>
+                                {% for medicamento in medicamentos %}
+                                    <li>{{ medicamento.codigo }} - {{ medicamento.nombre }} -  {{ medicamento.concentracion }} - {{ medicamento.presentacion }}
+                                        
+                                        <form>
+                                            <p class='full'>                       </p>
+                                            <p class='full'>
+                                                <a href="{% url 'ingresar_datos' medicamento_codigo=medicamento.codigo %}">Ingresar Datos</a></li>
+                                
+                                            </p>
+                                        </form>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}                     
+            </div>
+        </div>    
+    </div>
+
+    
+</body>
+</html>
+
+

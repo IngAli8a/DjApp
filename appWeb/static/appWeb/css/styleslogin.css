@@ -1,0 +1,67 @@
+* {
+    font-family: 'Oswald', sans-serif;;
+}
+html, body, main {
+    height: 100%;
+}
+#panel-left {
+    display: flex !important;
+    align-items:flex-start;
+    background: linear-gradient(#0a91c2de,#0a91c2de), url(https://p4.wallpaperbetter.com/wallpaper/311/66/454/hexagon-wallpaper-preview.jpg) no-repeat center center / cover fixed;
+}
+#panel-right {
+    display: flex !important;
+    align-items: center;
+    background-color: #F1F6F9;
+    
+}
+
+h1 {
+    color: #fff;
+    font-size: 60px;
+    font-weight: 900;
+}
+h2 {
+    color: #0ba8e2;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.description {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+#panel-left .logo-container svg {
+    width: 220px;
+}
+
+
+#panel-right form input {
+    background-color: unset;
+    border: 0;
+    border-bottom: 2px solid #005285;
+    border-radius: 0;
+    font-weight: 400;
+}
+
+.btn.btn-primary {
+    border: 0 !important;
+    border-radius: 50px !important;
+    background-color: #0ba8e2 !important;
+    padding: 15px 40px !important;
+    color: #fff !important;
+    font-weight: 400 !important;
+}
+
+.links a {
+    color: #005285;
+    
+}
+
+@media only screen and (max-width: 767px) {
+    #panel-left {
+        display: none !important;
+    }
+  }

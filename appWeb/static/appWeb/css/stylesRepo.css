@@ -1,0 +1,185 @@
+/* ------------ RESET ------------ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background: linear-gradient(#05486173,#05486173), url(https://p4.wallpaperbetter.com/wallpaper/311/66/454/hexagon-wallpaper-preview.jpg) no-repeat center center fixed;
+	-webkit-background-size:cover;
+   -moz-background-size:cover;;
+   -o-background-size:cover;
+   background-size:cover;
+	
+	color: #046da3;
+	line-height: 1.6;
+	font-family:'Oswald', sans-serif;
+	padding: 0em;
+   
+}
+
+
+input[type="checkbox"] {
+    display: none;
+}
+
+/* --------- Transitions --------- */
+header, nav ul, nav ul li, nav ul li a,
+.mobile-nav, .main-header-nav {
+    transition: all ease 0.3s;
+}
+
+/* ------- Container Wrap ------- */
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+
+}
+
+/* ------------------------------ */
+/* Header & Main Styles */
+header {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+header .main-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fffffff1;
+    min-height: 100px;
+    
+}
+
+header h1 {
+    color: #046da3;
+    font-size: 3em;
+    font-weight: 700;
+}
+
+main {
+   
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 200px);
+    font-size: 3em;
+    font-weight: bold;
+    margin: 15px;
+    letter-spacing: 1.25px;
+    text-align: center;
+}
+
+main div {
+    background: #ffffffcc;
+    box-shadow: 0 1px 3px 0 rgba(6, 97, 182, 0.5);
+    border-radius: 45px;
+    padding: 10%;
+    flex: 1; 
+}
+
+/* ------------------------------ */
+/* Menu Responsive - NAV */
+.main-header-nav {
+    background: #046da3;
+}
+
+.main-header-nav ul {
+    width: 100%;
+    display: table;
+}
+
+.main-header-nav ul li {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    display: table-cell;
+    font-weight: 500;
+    width: auto;
+    min-width: 100px;
+    text-align: center;
+}
+
+.main-header-nav ul li:first-child {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.main-header-nav ul li:hover a {
+    background: #4AE;
+}
+
+.main-header-nav ul li a {
+    background: #39D;
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.mobile-nav {
+    background: #2980b9;
+    color: #FFF;
+    display: none;
+    cursor: pointer;
+    padding: 15px;
+    min-height: 60px;
+    font-weight: 500;
+}
+
+.mobile-nav:hover {
+    background: #4AE;
+}
+
+/* ------------------------------ */
+/* Version Mobile */
+@media screen and (max-width: 740px) {
+    header .main-header {
+        display: none;
+    }
+
+    .main-header-nav {
+        background: #2980b9;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        bottom: 0;
+    }
+
+    .main-header-nav ul {
+        min-width: 260px;
+    }
+
+    .main-header-nav ul li {
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.01);
+        display: block;
+        text-align: left;
+    }
+
+    .main-header-nav ul li:first-child {
+        border-left: 0;
+    }
+
+    .main-header-nav ul li a {
+        padding: 20px 15px;
+    }
+
+    .main-header-nav ul li:hover a {
+        box-shadow: inset 4px 0 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .mobile-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    input[type="checkbox"]:checked ~ .main-header-nav {
+        left: -260px;
+    }
+}

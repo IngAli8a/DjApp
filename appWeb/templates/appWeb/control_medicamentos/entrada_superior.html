@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Entradas de nivel superior</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet", type='text/css' href="{% static 'appWeb/css/stylesentradas.css' %}" >
+    <!-- fontawesome.cdn for ICONS-->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!--animatecss.cdn for ANIMATION-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css" />
+</head>
+<body>
+    <div class='container'></div>
+        <h1>Buscar e Ingresar a Stock</h1>
+        <div class='wrapper animated bounceInLeft'>
+            <div class='company-info'>
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="nombre_busqueda">Buscar por nombre:</label>
+                    <input type="text" id="nombre_busqueda" name="nombre_busqueda">
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+            <div class='contact'>
+                <ul>
+                    {% for medicamento in medicamentos %}
+                        <li>
+                            {{ medicamento.nombre }} -  {{ medicamento.concentracion }} - {{ medicamento.presentacion }} - Cantidad: {{ medicamento.cantidad }} - Mes: {{ medicamento.mes }} - Año: {{ medicamento.ano }}
+
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="medicamento_id" value="{{ medicamento.pk }}">
+                                <label for="cantidad_nueva">Nueva cantidad:</label>
+                                <input type="number" id="cantidad_nueva" name="cantidad_nueva">
+                                
+                                <input type="date" id="fecha" name="fecha">
+                                <button type="submit">Actualizar</button>
+                            </form>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                {% if medicamento_seleccionado %}
+                    <p>Medicamento seleccionado: {{ medicamento_seleccionado.nombre }}</p>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

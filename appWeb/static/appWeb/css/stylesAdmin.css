@@ -1,0 +1,249 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background: linear-gradient(#0a91c281,#0a91c281), url(https://p4.wallpaperbetter.com/wallpaper/311/66/454/hexagon-wallpaper-preview.jpg) no-repeat center center fixed;
+	-webkit-background-size:cover;
+   -moz-background-size:cover;;
+   -o-background-size:cover;
+   background-size:cover;
+	
+	color: #046da3;
+	line-height: 1.6;
+	font-family:'Oswald', sans-serif;
+	padding: 0em;
+}
+
+.container{
+	max-width:1050px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2em;
+}
+
+
+
+.brand{
+	text-align: center;
+}
+.brand span{
+	color: #fdfdfd;
+}
+.company-info span{
+	color: #fdfdfd;
+}
+.company-info{
+	text-align: center;
+}
+
+
+.wrapper{
+	box-shadow: 0 0 20px 0 #005285dc;
+} 
+
+.wrapper >*{
+	padding: 1em;
+}
+
+.company-info{
+	background: #005285d2;
+	text-align: center;
+}
+
+.company-info h3, .company-info ul{
+	text-align:center;
+	margin: 0 0 1rem 0;
+}
+
+.contact{
+	background: #ffffff;
+}
+
+/* FORM CONTACTS
+ MOBILE SIZE FIRST */
+
+.contact form{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 20px;
+}
+
+.contact form label{
+	display: block;
+}
+
+.contact form p{
+	margin:0; 
+}
+
+.contact form .full{
+	grid-column: 1/3;
+}
+
+.contact form button, .contact form input, .contact form textarea{
+	width: 100%;
+	padding: 1em;
+	border: 1px solid #c9e6ff;
+}
+
+.contact form button{
+	background: #005285;
+	border-radius: 12px;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+.contact form button:hover, .contact form button:focus{
+	background: #005285;
+	color: #fff;
+	outline:0;
+	transition: background-color 0.5 s ease-out;
+}
+
+/* LARGE SCREENS */
+@media(min-width:700px){
+	.wrapper{
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+	}
+
+	.wrapper>*{
+		padding:2em;
+	}
+
+	.company-info h3, .company-info ul, .brand{
+		text-align: left;
+	}
+}
+
+
+
+  /* Setting body background and font style*/
+
+  
+  .company-info .login-box .user-box input:focus ~ label,
+  .company-info .login-box .user-box input:valid ~ label {
+	top: -20px;
+	left: 0;
+	color: #03e9f4;
+	font-size: 12px;
+  }
+  
+  .company-info .login-box form a {
+	position: relative;
+	display: block;
+	/*padding: 10px 20px;*/
+	color: #005285;
+	font-size: 16px;
+	text-decoration: none;
+	text-transform: uppercase;
+	overflow: hidden;
+	transition: .5s;
+	margin-top: 40px;
+	letter-spacing: 4px;
+	font-weight: bold; 
+	font-family:Verdana, Geneva, Tahoma, sans-serif;
+	flex: 1 1 auto;
+	margin: 10px;
+	padding: 30px;
+	text-align: center;
+	text-transform: uppercase;
+	transition: 0.5s;
+	background-size: 200% auto;
+	color: white;
+   /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+	box-shadow: 0 0 20px #eee;
+	border-radius: 10px;
+  }
+  
+  .company-info .login-box a:hover {
+	background: #03e9f4;
+	color: #070000;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #03e9f4,
+				0 0 25px #03e9f4,
+				0 0 50px #03e9f4,
+				0 0 100px #03e9f4;
+  }
+  
+  .company-info .login-box a span {
+	position: absolute;
+	display: block;
+  }
+  
+  .company-info .login-box a span:nth-child(1) {
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, #4b03f4);
+	animation: btn-anim1 1s linear infinite;
+  }
+  
+  @keyframes btn-anim1 {
+	0% {
+	  left: -100%;
+	}
+	50%,100% {
+	  left: 100%;
+	}
+  }
+  
+  .company-info .login-box a span:nth-child(2) {
+	top: -100%;
+	right: 0;
+	width: 2px;
+	height: 100%;
+	background: linear-gradient(180deg, transparent, #240a55);
+	animation: btn-anim2 1s linear infinite;
+	animation-delay: .25s
+  }
+  
+  @keyframes btn-anim2 {
+	0% {
+	  top: -100%;
+	}
+	50%,100% {
+	  top: 100%;
+	}
+  }
+  
+  .company-info .login-box a span:nth-child(3) {
+	bottom: 0;
+	right: -100%;
+	width: 100%;
+	height: 2px;
+	background: linear-gradient(270deg, transparent, #03e9f4);
+	animation: btn-anim3 1s linear infinite;
+	animation-delay: .5s
+  }
+  
+  @keyframes btn-anim3 {
+	0% {
+	  right: -100%;
+	}
+	50%,100% {
+	  right: 100%;
+	}
+  }
+  
+  .company-info .login-box a span:nth-child(4) {
+	bottom: -100%;
+	left: 0;
+	width: 2px;
+	height: 100%;
+	background: linear-gradient(360deg, transparent, #03e9f4);
+	animation: btn-anim4 1s linear infinite;
+	animation-delay: .75s
+  }
+  
+  @keyframes btn-anim4 {
+	0% {
+	  bottom: -100%;
+	}
+	50%,100% {
+	  bottom: 100%;
+	}
+  }
+  
