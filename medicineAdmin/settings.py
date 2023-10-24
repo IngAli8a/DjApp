@@ -81,7 +81,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'Mochoao4.',
         'PORT': '3306',
-        'HOST':'db-centrocomunitario.cg4n9fvhpkop.us-east-2.rds.amazonaws.com'
+        'HOST':'localhost'
     }
 }
 
