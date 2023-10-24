@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_centrocomunitario',
-        'USER': 'admin',
+        'USER': 'root',
         'PASSWORD': 'Mochoao4.',
         'PORT': '3306',
         'HOST':'localhost'
