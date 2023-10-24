@@ -78,10 +78,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_centrocomunitario',
-        'USER': 'root',
+        'USER': 'admin',
         'PASSWORD': 'Mochoao4.',
         'PORT': '3306',
-        'HOST':'localhost'
+        'HOST':'db-centrocomunitario.cg4n9fvhpkop.us-east-2.rds.amazonaws.com'
     }
 }
 
