@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Resumen Mensual Demanda Real</title>
-    <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap -->
@@ -39,17 +39,29 @@
                  <div class="table-responsive">
                      <div class="form-group">
                      <button id="btnDescargar" type="button" class="btn btn-default">Descargar</button>
+                     <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    hoa
+                                </th>
+                            </tr>
+                        </thead>
+                     </table>
                      <table id="datatable-resumenmensual" class="table">
-                         <h1>Resumen Mensual de Entregas</h1>
-                         <caption>Resumen mensual</caption>
+                         <h1>REGISTRO DIARIO DE DEMANDA REAL</h1>
+                         <caption>REGISTRO DIARIO DE DEMANDA REAL</caption>
+                         
                          <thead>
                             <tr>
                                 <th>Código ID</th>
                                 <th>Nombre</th>
-                                <th>Concentracion</th>
-                                <th>Presentacion</th>
+                                <th>Concentración</th>
+                                <th>Presentación</th>
                                 <th>Total Entregado</th>
                                 <th>Total no Entregado</th>
+                                <th>Demanda Real</th>
+                                <th>Existencias</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +73,8 @@
                                 <td>{{ entrega.codigo__presentacion }}</td>
                                 <td>{{ entrega.suma_entregado }}</td>
                                 <td>{{ entrega.suma_no_entregado }}</td>
+                                <td>{{ entrega.demanda_diaria }}</td>
+                                <td>{{ entrega.stock}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

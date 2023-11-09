@@ -1,8 +1,10 @@
 
 import datetime
 from pyexpat.errors import messages
+from urllib import response
+from django.http import HttpResponse
 from django.http.response import JsonResponse
-from django.db.models import Sum
+from django.db.models import Sum, F
 from django.shortcuts import redirect, get_object_or_404, render
 from .models import demanda_diarias, InfoMed, StockMed, AdminMed, SaldoAnterior, indi_mensuales, admin_indi, indi_mensuales, DemandaReal
 from .forms import DateRangeForm, InfoMedForm, MedicamentoForm, DemandaForm, admin_indiForm, DateRangeForms
@@ -17,6 +19,10 @@ from datetime import datetime
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
+import pandas as pd
+
 # Create your views here.
 
 #---------vista para inicio de sesion----------
@@ -230,12 +236,12 @@ def demanda_diaria_(request):
             fecha__range=[fecha_inicio, fecha_fin]
         ).values('codigo_id','codigo__nombre','codigo__concentracion','codigo__presentacion').annotate(
             suma_entregado=Sum('entregado'),
-            suma_no_entregado=Sum('no_entregado')
+            suma_no_entregado=Sum('no_entregado'),
+            demanda_diaria=Sum(F('entregado')+ F('no_entregado')),
+            stock=F('codigo__stockmed__stock')
            
         )
-    
         return render(request, 'appWeb/reporteria/demanda_diaria.html', {'entregas': entregas})
-
     return render(request, 'appWeb/reporteria/demanda_diaria.html')
 
 
@@ -285,21 +291,15 @@ def informe_bres(request):
                     codigo=medicamento,
                     fecha__range=[fecha_inicio, fecha_fin]
                 ).aggregate(Sum('entregado'))['entregado__sum'] or 0
+
                 no_entregado_usuario = demanda_diarias.objects.filter(
                     codigo=medicamento,
                     fecha__range=[fecha_inicio, fecha_fin]
                 ).aggregate(Sum('no_entregado'))['no_entregado__sum'] or 0
 
               # Obtener la "DEMANDA REAL" del medicamento para el rango de fechas seleccionado
-            
-                if fecha_inicio is not None and isinstance(fecha_inicio, datetime) and isinstance(fecha_fin, datetime):
-                    demanda_real_obj = DemandaReal.objects.filter(
-                        codigo=medicamento,
-                        fecha__gte=fecha_inicio,
-                        fecha__lte=fecha_fin
-                    ).aggregate(Sum('demanda_real'))['demanda_real__sum'] or 0
-                else:
-                    demanda_real_obj = 0  
+                demanda_real_obj = entregado_usuario + no_entregado_usuario
+               
                                     
             # Calcular el "SALDO MES SIGUIENTE"
                 saldo_mes_siguiente = saldo_anterior_seleccionado + entrada_nivel_superior - entregado_usuario
@@ -392,6 +392,9 @@ def mostrar_indicadores(request):
     mensuales = indi_mensuales.objects.all()
     return render(request, 'appWeb/reporteria/mostrar_indicadores.html', {'indicadores': indicadores, 'mensuales': mensuales})
 
+def borrar_datos(request):
+    indi_mensuales.objects.all().delete()
+    return redirect('mostrar_indicadores')
 
 #------------vista para visualizar el stock------------------
 def informe_productos(request):
@@ -429,4 +432,89 @@ def resumen_mensual_actualizar(request):
         demanda_real.save()
 
     return render(request, 'appWeb/reporteria/resumen_mensualddr.html', {'entregas_meses': entregas_meses})
+
+
+
+def calculate_data(request):
+   
+    context = {}  # Define un diccionario de contexto predeterminado
+
+    if request.method == "POST":
+        start_date = datetime.strptime(request.POST.get("start_date"), "%Y-%m-%d")
+        end_date = datetime.strptime(request.POST.get("end_date"), "%Y-%m-%d")
+
+       
+        medicamentos = InfoMed.objects.all()
+        data = []
+        for medicamento in medicamentos:
+            # Calculate SALDO ANTERIOR
+            one_month_ago = timezone.now() - timedelta(days=30)  # Sin make_aware
+            saldo_anterior = SaldoAnterior.objects.filter(fecha__gte=one_month_ago, fecha__lt=start_date).aggregate(Sum('saldoAnterior'))['saldoAnterior__sum']
+            if saldo_anterior is None:
+                saldo_anterior = 0  # 
+            # Calculate ENTRADAS DE NIVEL SUPERIOR
+            entradas_nivel_superior = AdminMed.objects.filter(fecha__range=(start_date, end_date)).aggregate(Sum('cantidad'))['cantidad__sum']
+
+            # Calculate ENTREGADO A USUARIO
+            entregado_usuario = demanda_diarias.objects.filter(fecha__range=(start_date, end_date)).aggregate(Sum('entregado'))['entregado__sum']
+
+            # Calculate NO ENTREGADO A USUARIO
+            no_entregado_usuario = demanda_diarias.objects.filter(fecha__range=(start_date, end_date)).aggregate(Sum('no_entregado'))['no_entregado__sum']
+
+            # Calculate DEMANDA REAL
+            demanda_real = entregado_usuario + no_entregado_usuario
+
+            # Calculate SALDO DE MES SIGUIENTE
+            saldo_mes_siguiente = saldo_anterior + entradas_nivel_superior - entregado_usuario
+
+            # Calculate EXISTENCIA FISICA EN BODEGA
+            stock = StockMed.objects.all()
+            context['stock'] = stock
+
+            # Calculate PROMEDIO MENSUAL DE DEMANDA REAL
+            # Convierte las cadenas de texto en objetos datetime
+            start_date = datetime.strptime(request.POST.get("start_date"), "%Y-%m-%d")
+            end_date = datetime.strptime(request.POST.get("end_date"), "%Y-%m-%d")
+
+            # Calcula la fecha hace 90 días
+            ninety_days_ago = start_date - timedelta(days=90)
+
+            # Luego, puedes usar ninety_days_ago y end_date en tu consulta
+            demanda_diaria_sum = demanda_diarias.objects.filter(fecha__range=(ninety_days_ago, end_date)).aggregate(Sum('entregado'))['entregado__sum']
+            promedio_mensual_demanda = demanda_diaria_sum / 3
+
+            # Calculate MESES EN EXISTENCIA DISPONIBLE
+            meses_en_existencia = saldo_mes_siguiente / promedio_mensual_demanda
+
+            # Calculate CANTIDAD MAXIMA
+            cantidad_maxima = promedio_mensual_demanda * 3
+
+            # Calculate CANTIDAD A SOLICITAR
+            cantidad_a_solicitar = saldo_mes_siguiente - cantidad_maxima
+
+            # Get CANTIDAD RECIBIDA for the next month
+            next_month = end_date + timedelta(days=1)
+            cantidad_recibida = AdminMed.objects.filter(fecha=next_month).values_list('cantidad', flat=True).first()
+
+            data.append({
+                "medicamento": medicamento,
+                "saldo_anterior": saldo_anterior,
+                "entradas_nivel_superior": entradas_nivel_superior,
+                "entregado_usuario": entregado_usuario,
+                "no_entregado_usuario": no_entregado_usuario,
+                "demanda_real": demanda_real,
+                "saldo_mes_siguiente": saldo_mes_siguiente,
+                "existencia_fisica": stock,
+                "promedio_mensual_demanda": promedio_mensual_demanda,
+                "meses_en_existencia": meses_en_existencia,
+                "cantidad_maxima": cantidad_maxima,
+                "cantidad_a_solicitar": cantidad_a_solicitar,
+                "cantidad_recibida": cantidad_recibida,
+            })
+    #return response
+        return render(request, 'appWeb/reporteria/calculate.html')
+
+    return render(request, "appWeb/reporteria/calculate.html")
+
+
 

@@ -83,21 +83,7 @@ class DemandaReal(models.Model):
         return f"DemandaReal #{self.id}"
 
 
-@receiver(post_save, sender=demanda_diarias)
-def actualizar_demanda_real(sender, instance, created, **kwargs):
-    if created:
-        codigo = instance.codigo
-        fecha = instance.fecha
-        entregado = instance.entregado
-        no_entregado = instance.no_entregado
-
-        # Buscar si ya existe un registro para este medicamento, mes y año
-        demanda_real, created = DemandaReal.objects.get_or_create(codigo=codigo, fecha=fecha)
-
-        # Actualizar el campo demanda_real
-        demanda_real.demanda_real = (demanda_real.demanda_real if not created else 0) + entregado + no_entregado
-        demanda_real.save()
-
+#@receiver(post_save, sender=demanda_diarias)
 
 class prueba(models.Model):
     demanda_realidades = models.IntegerField()

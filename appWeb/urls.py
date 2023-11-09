@@ -22,5 +22,7 @@ urlpatterns = [
     path('menuprincipal/guardar_indicadores/', views.guardar_indicadores, name="guardar_indicadores"),
     #path('registro/', views.registro, name="registro")
     path('menuprincipal/menurepo/informe_productos/', views.informe_productos, name="informe_productos"),
-    path('menuprincipal/crear_user/', views.crear, name="crear_user")
+    path('menuprincipal/crear_user/', views.crear, name="crear_user"),
+    path('menuprincipal/menurepo/calculate/', views.calculate_data, name='calculate'),
+    path('borrar_datos/', views.borrar_datos, name='borrar_datos')
 ]

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">
+    <title>BRES</title>
+</head>
+<body>
+    <h1>Informe BRES</h1>
+    <form method="post" action="{% url 'calculate' %}">
+        {% csrf_token %}
+        <label for="start_date">Fecha de Inicio:</label>
+        <input type="date" name="start_date" required>
+        <label for="end_date">Fecha de Fin:</label>
+        <input type="date" name="end_date" required>
+        <input type="submit" value="Calcular">
+    </form>
+    {% if data %}
+    <h2>Resultados por Medicamento:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Concentración</th>
+                <th>Presentación</th>
+                <th>1. SALDO ANTERIOR</th>
+                <th>2. ENTRADAS DE NIVEL SUPERIOR</th>
+                <th>3. ENTREGADO A USUARIO</th>
+                <th>4. NO ENTREGADO A USUARIO</th>
+                <th>5. DEMANDA REAL</th>
+                <th>6. REAJUSTES</th>
+                <th>7. SALDO DE MES SIGUIENTE</th>
+                <th>8. EXISTENCIA FISICA EN BODEGA</th>
+                <th>9. PROMEDIO MENSUAL DE DEMANDA REAL</th>
+                <th>10. MESES EN EXISTENCIA DISPONIBLE</th>
+                <th>11. CANTIDAD MAXIMA</th>
+                <th>12. CANTIDAD A SOLICITAR</th>
+                <th>13. CANTIDAD RECIBIDA</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.medicamento.codigo }}</td>
+                <td>{{ item.medicamento.nombre }}</td>
+                <td>{{ item.medicamento.concentracion }}</td>
+                <td>{{ item.medicamento.presentacion }}</td>
+                <td>{{ item.saldo_anterior }}</td>
+                <td>{{ item.entradas_nivel_superior }}</td>
+                <td>{{ item.entregado_usuario }}</td>
+                <td>{{ item.no_entregado_usuario }}</td>
+                <td>{{ item.demanda_real }}</td>
+                <td></td>
+                <td>{{ item.saldo_mes_siguiente }}</td>
+                <td>{{ item.existencia_fisica.stock }}</td>
+                <td>{{ item.promedio_mensual_demanda }}</td>
+                <td>{{ item.meses_en_existencia }}</td>
+                <td>{{ item.cantidad_maxima }}</td>
+                <td>{{ item.cantidad_a_solicitar }}</td>
+                <td>{{ item.cantidad_recibida }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+    {% endif %}
+</body>
+</html>
